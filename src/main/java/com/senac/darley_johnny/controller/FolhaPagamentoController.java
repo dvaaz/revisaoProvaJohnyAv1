@@ -1,6 +1,8 @@
 package com.senac.darley_johnny.controller;
 
+import com.senac.darley_johnny.entity.dto.FolhaPagamentoDTOResponse;
 import com.senac.darley_johnny.service.FolhaPagamentoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

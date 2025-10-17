@@ -22,8 +22,8 @@ public class SecurityConfiguration {
     private UserAuthenticationFilter userAuthenticationFilter;
 
     public static final String [] ENDPOINT_PUBLIC = {
-            "/users/login", // Url que usaremos para fazer login
-            "/users", // Url que usaremos para criar um usuário
+            "/funcionario/login", // Url que usaremos para fazer login
+            "/funcionario/cadastrar", // Url que usaremos para criar um usuário
             "/h2-console",
             // 🔓 Swagger/OpenAPI UI
             "/v3/api-docs/**",
@@ -32,18 +32,15 @@ public class SecurityConfiguration {
     };
 
     // Endpoints que requerem autenticação para serem acessados
-    public static final String [] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
-            "/users/test"
-    };
-
     // Endpoints que só podem ser acessador por usuários com permissão de cliente
-    public static final String [] ENDPOINTS_CUSTOMER = {
-            "/users/test/customer"
+    public static final String [] ENDPOINTS_COLABORADOR = {
+            "/"
     };
 
     // Endpoints que só podem ser acessador por usuários com permissão de administrador
-    public static final String [] ENDPOINTS_ADMIN = {
-            "/users/test/administrator"
+    public static final String [] ENDPOINTS_GERENTE = {
+        "/folhapagamento/**",
+        "/funcionario/listar"
     };
 
     @Bean
@@ -54,9 +51,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(ENDPOINT_PUBLIC).permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() //adicionado para funcionamento do swagger
-                        .requestMatchers(ENDPOINTS_ADMIN).hasRole("ADMINISTRATOR")
-                        .requestMatchers(ENDPOINTS_CUSTOMER).hasRole("CUSTOMER")
-                        .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_REQUIRED).authenticated()
+                        .requestMatchers(ENDPOINTS_COLABORADOR).hasRole("COLABORADOR")
+                        .requestMatchers(ENDPOINTS_GERENTE).hasRole("GERENTE")
                         .anyRequest().denyAll()
                 )
                 .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

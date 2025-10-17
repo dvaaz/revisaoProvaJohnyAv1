@@ -1,13 +1,14 @@
 package com.senac.darley_johnny.controller;
 
 import com.senac.darley_johnny.entity.Funcionario;
+import com.senac.darley_johnny.entity.dto.FuncionarioDTORequest;
+import com.senac.darley_johnny.entity.dto.FuncionarioDTOResponse;
+import com.senac.darley_johnny.entity.dto.FuncionarioLoginDTORequest;
+import com.senac.darley_johnny.entity.dto.TokenSecurityResponse;
 import com.senac.darley_johnny.service.FuncionarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,4 +40,23 @@ public class FuncionarioController {
     }
     return ResponseEntity.ok(resposta);
   }
+
+  @PostMapping("/cadastrar")
+  public ResponseEntity<FuncionarioDTOResponse> criar(
+      @RequestBody FuncionarioDTORequest dtoRequest
+      ) {
+    return ResponseEntity.ok(this.service.criar(dtoRequest));
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<TokenSecurityResponse> login(
+      @RequestBody FuncionarioLoginDTORequest dtoRequest
+  ) {
+    TokenSecurityResponse dtoResponse = service.login(dtoRequest);
+    if (dtoResponse.getToken() != null) {
+      return ResponseEntity.ok(dtoResponse);
+    }
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+  }
+
 }

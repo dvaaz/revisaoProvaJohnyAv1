@@ -34,13 +34,14 @@ public class SecurityConfiguration {
     // Endpoints que requerem autenticação para serem acessados
     // Endpoints que só podem ser acessador por usuários com permissão de cliente
     public static final String [] ENDPOINTS_COLABORADOR = {
-            "/"
+            "/funcionario/listar/**"
     };
 
     // Endpoints que só podem ser acessador por usuários com permissão de administrador
     public static final String [] ENDPOINTS_GERENTE = {
         "/folhapagamento/**",
         "/funcionario/listar"
+
     };
 
     @Bean

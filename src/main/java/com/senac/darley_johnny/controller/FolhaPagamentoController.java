@@ -1,12 +1,15 @@
 package com.senac.darley_johnny.controller;
 
+import com.senac.darley_johnny.entity.FolhaPagamento;
+import com.senac.darley_johnny.entity.dto.FolhaPagamentoDTORequest;
 import com.senac.darley_johnny.entity.dto.FolhaPagamentoDTOResponse;
+import com.senac.darley_johnny.entity.dto.FuncionarioFolhaPagamentoDTO;
 import com.senac.darley_johnny.service.FolhaPagamentoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/folhapagamento")
@@ -18,8 +21,8 @@ public class FolhaPagamentoController {
   }
 
   @PostMapping("/cadastrar")
-  public ResponseEntity<FolhaPagamentoDTOResponse> criar(
-      @RequestBody FolhaPagamentoDTORequest dtoRequest
+  public ResponseEntity<FolhaPagamento> criar(
+      @RequestBody FolhaPagamento dtoRequest
   ){
     return ResponseEntity.ok(this.service.criar(dtoRequest));
   }
